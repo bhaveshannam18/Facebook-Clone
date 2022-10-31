@@ -140,4 +140,19 @@ router.put("/:id/unfollow",async (req,res)=>{
 }
 )
 
+router.get("/suggestedfriends",async (req,res)=>{
+    try {
+        const allUsers = await User.find();
+        //console.log(allUsers);
+        let friendList = [];
+        allUsers.map(oneUser=>{
+            const {_id,username,profilePic} = oneUser;
+            friendList.push({_id,username,profilePic});
+        })
+        res.status(200).json(friendList);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 module.exports = router
